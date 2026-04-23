@@ -1,28 +1,25 @@
 const express = require('express');
+const cors = require('cors');
 const path = require('path');
 const userRoutes = require('./routes/user.routes');
 const errorMiddleware = require('./middlewares/error.middleware');
 
 const app = express();
 
-const allowedOrigins = (process.env.FRONTEND_URL || 'https://testfe-sigma.vercel.app,http://localhost:5173')
-	.split(',')
-	.map((origin) => origin.trim())
-	.filter(Boolean);
+const allowedOrigins = [
+	'https://testfe-sigma.vercel.app',
+	'http://localhost:5173'
+];
 
-const isLocalOrigin = (origin) => /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin || '');
-
-app.use((req, res, next) => {
-	const requestOrigin = req.headers.origin;
-	if (!requestOrigin || allowedOrigins.includes(requestOrigin) || isLocalOrigin(requestOrigin)) {
-		res.header('Access-Control-Allow-Origin', requestOrigin || allowedOrigins[0]);
-	}
-	res.header('Vary', 'Origin');
-	res.header('Access-Control-Allow-Methods', 'GET,POST,PUT,PATCH,DELETE,OPTIONS');
-	res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-	if (req.method === 'OPTIONS') return res.sendStatus(204);
-	next();
-});
+app.use(cors({
+	origin: (origin, callback) => {
+		if (!origin || allowedOrigins.includes(origin)) {
+			return callback(null, true);
+		}
+		return callback(new Error('Not allowed by CORS'));
+	},
+	credentials: true
+}));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
