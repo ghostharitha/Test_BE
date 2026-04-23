@@ -1,20 +1,23 @@
 # Test_BE
 
-Minimal Node.js + MongoDB starter for institute login (register + login).
+Node.js + Express + MongoDB backend for authentication.
 
-Quick start:
+## Environment
 
-1. Copy `.env.example` to `.env` and set `MONGODB_URI` and `PORT`.
-2. Install dependencies:
+Copy `.env.example` to `.env` and set:
 
-```bash
-npm install
-```
+- `PORT` (example: `3000`)
+- `FRONTEND_URL` (example: `http://localhost:5173`)
+- `MONGODB_URI`
+- `JWT_SECRET`
 
-3. Start in dev mode:
+## Run
 
-```bash
-npm run dev
-```
+1. `npm install`
+2. `npm run dev`
 
-Open `/register.html` and `/login.html` in the browser (served from the server root).
+## API
+
+- `GET /api/health`
+- `POST /api/auth/register`
+- `POST /api/auth/login`
