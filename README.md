@@ -7,7 +7,7 @@ Node.js + Express + MongoDB backend for authentication.
 Copy `.env.example` to `.env` and set:
 
 - `PORT` (example: `3000`)
-- `FRONTEND_URL` (example: `http://localhost:5173`)
+- `FRONTEND_URL` (example: `https://testfe-sigma.vercel.app,http://localhost:5173`)
 - `MONGODB_URI`
 - `JWT_SECRET`
 
