@@ -10,9 +10,11 @@ const allowedOrigins = (process.env.FRONTEND_URL || 'https://testfe-sigma.vercel
 	.map((origin) => origin.trim())
 	.filter(Boolean);
 
+const isLocalOrigin = (origin) => /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/i.test(origin || '');
+
 app.use((req, res, next) => {
 	const requestOrigin = req.headers.origin;
-	if (!requestOrigin || allowedOrigins.includes(requestOrigin)) {
+	if (!requestOrigin || allowedOrigins.includes(requestOrigin) || isLocalOrigin(requestOrigin)) {
 		res.header('Access-Control-Allow-Origin', requestOrigin || allowedOrigins[0]);
 	}
 	res.header('Vary', 'Origin');
